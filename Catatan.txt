@@ -24,6 +24,7 @@ terakhir testing data untuk menguji kinerja model secara independen.
 
 
 3)
+Algoritma  : Logistic Regression, karena response adalah variable categorical yang hanya memiliki 2 value
 H0: Variable tidak memiliki relasi yang signifikan terhadap response
 H1: Variable memiliki relasi yang signifikan terhadap response
 1. ada, karena p-value dari fitur-fitur ini nilainya kurang dari alpha yang bernilai 5% dan hanya ada satu fitur yang p-valuenya di atas 5% yaitu fitur bang, sehingga dapat disimpulkan bahwa ada hubungan antara response dan predictors setelah diuji menggunakan tes p-value.
