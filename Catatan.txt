@@ -1,0 +1,76 @@
+1) Dataset ini digunakan untuk menyelesaikan masalah umum dalam pemrosesan email, yaitu membedakan antara email yang merupakan spam dengan email yang merupakan komunikasi yang diinginkan. Dataset ini bertujuan untuk mengembangkan model machine learning yang mampu mengklasifikasikan email sebagai spam atau bukan spam berdasarkan fitur-fitur yang ada dalam email tersebut.
+Fitur fitur yang ada dalam data set kami yaitu ctrl.tot, dollar, bang, money, n000, dan make.
+
+- ctrl.tot adalah Panjang total rangkaian huruf kapital yang tidak terputus
+- dollar adalah Kemunculan tanda dolar, sebagai persentase dari jumlah total karakter
+- money adalah Kemunculan 'uang', sebagai persentase dari jumlah total karakter
+- n000 adalah Kemunculan string '000', sebagai persentase dari jumlah total kata
+- make adalah Kemunculan 'make', sebagai persentase dari jumlah kata total
+
+
+2) Data cleaning & preprocessing
+jadi disini kami Melakukan normalisasi data dengan mentransformasi data pada kolom 'yesno' yang awalnya bernilai 'y' & 'n' menjadi '1' & '0'.
+kemudian juga mengecek apakah ada nilai yang null dalam dataset.
+
+dari hasil ini bisa dilihat bahwa tidak ada data yang bernilai null dan isi dari kolom yesno format nya sudah berubah menjadi 0&1.
+
+kemudian kami melakukan korelasi matrix serta mendescribe dataset, lalu mengcopy data ke dalam df_copy.
+
+Setelah copy data, kami melakukan Normalisasi (scaling) pada kolom 'crl.tot' dalam  df_copy menggunakan teknik Min-Max Normalization untuk mengubah nilai-nilai dalam kolom sehingga memiliki rentang yang sama dengan kolom yang lain.
+
+Kemudian data dibagi menjadi 3, yaitu training data untuk melatih model , lalu validatiob data untuk mengevaluasi apakah model mengalami overfitting, underfitting, atau berada pada tingkat yang baik,
+terakhir testing data untuk menguji kinerja model secara independen.
+
+
+
+3)
+1. ada, karena p-value dari fitur-fitur ini nilainya kurang dari alpha yang bernilai 5% dan hanya ada satu fitur yang p-valuenya di atas 5% yaitu fitur bang, sehingga dapat disimpulkan bahwa ada hubungan antara response dan predictors setelah diuji menggunakan tes p-value.
+
+
+2. semua predictors penting, karena ketika predictors didrop satu persatu nilai dari AUC akan menurun.
+Dalam data spam email ini, kolom 'bang' adalah data yang bersifat confounding.
+'bang' merupakan confounder karena, jika bang dihilangkan pada model nilai yang dihasilkan oleh AUC (Dalam kasus ini menggunakan AUC) mengalamai penurunan nilai yang signifikan dibandingkan yang lainnya, yaitu mencapai 0,73.
+
+3. akurat, Dengan menggunakan confusion matrix, hasil yang dihasilkan oleh Logistic Regression cukup akurat dengan data target spam dengan prediksi spam yang sebesar 97%, namun untuk data target spam dengan prediction spam sebesar 63% cukup akurat dan dapat ditraining untuk menghasilkan data yang lebih baik.
+
+Dari validation confusion matrix ini dapat dilihat bahwa bagian putih yang menunjukkan bahwa email diprediksi bukan spam dan ternyata memang benar bukan spam persentasenya sebesar 97%, kemudian bagian orange yang menunjukkan email yang diprediksi spam memang benar spam persentasenya sebesar 63%. Dari sini dapat disimpulkan bahwa hasil yang dihasilkan oleh logistic regression cukup akurat dan dapat ditraining untuk menghasilkan data yang lebih baik.
+
+*keterangan*
+target = fakta, prediction = prediksi
+putih = bukan spam dan benar bukan spam
+hitam = diprediksi spam tapi bukan spam
+ungu = diprediksi bukan spam tapi ternyata spam
+orange = diprediksi spam dan benar spam
+
+Kemudian, jika dilihat menggunakan ROC AUC, hasil prediksi model memiliki hasil yang cukup akurat dengan nilai auc yang lebih dari 0,5, yaitu 0,85. Model ini memiliki tingkat akurasi yang lebih baik dibandingkan kemungkinan random. Dari hasil resampling dapat diketahui juga jika model tidak overfit dan underfit karena nilai dari roc value dan roc training data hasilnya sama.
+
+
+4) Resampling method
+1. Untuk MSE yang dihasilkan oleh logistic regression adalah 18%, nilai ini tergolong kecil sehingga model dapat menghasilkan hasil klasifikasi yang akurat dan mendekati nilai sebenarnya.
+
+Lalu untuk MSE yang dihasilkan oleh K-Fold Validation, rata-rata dari keseluruhan lipatannya adalah 0,179 atau 17%. Nilai MSE ini juga terhitung kecil sehingga model akan dapat memberikan hasil yang akurat.
+
+
+2. Bahas Bias-Variance trade off 
+alasan mengapa data displit sizenya menjadi 0,3 adalah supaya model tidak overfit.
+
+1. Validation Set (Validasi Set):
+Bias: Validation set dapat menghasilkan perkiraan bias yang lebih tinggi daripada K-Fold Cross-Validation. Ini karena yang diukur hanyalah kinerja model pada satu subset data validasi.
+
+Varians: Pengukuran bias yang tinggi pada satu set data validasi bisa mengakibatkan model menjadi overfit pada data tersebut sehingga menghasilkan varians yang tinggi.
+
+2. K-Fold Cross-Validation:
+Bias: K-Fold Cross-Validation cenderung memberikan perkiraan bias yang lebih baik karena mengukur kinerja model pada berbagai subset data pengujian yang berbeda.
+
+Varians: Dengan menggunakan lebih banyak data pengujian dalam K-Fold Cross-Validation, model memiliki kesempatan untuk menggeneralis lebih baik, mengurangi risiko overfitting, dan menghasilkan varians yang lebih rendah.
+
+
+5) Untuk pemilihan model dan memilih metode memperbaiki model, data akan dipisah menjadi data training dan data validation.
+
+1. Model pertama yaitu Naive Bayes. Dari pengujian yang dilakukan dapat diketahui bahwa Naive bayes memilki akurasi yang cukup baik yaitu 0.75, namun masih lebih rendah dibandingkan logistic regression. Kemudian dari confusion matrixnya dapat diketahui bahwa model ini kurang baik digunakan, karena besarnya persentase email spam yang diprediksi sebagai bukan spam.
+
+2. Model kedua adalah LDA dengan nilai akurasi yang cukup baik yaitu 0.76, namun masih lebih rendah dibandingkan dengan logisitic regression. Dari confussion matrix LDA, dapat dilihat bahwa prediksi spam sebagai non spam cukup tinggi yaitu 60% sehingga model ini kurang baik untuk digunakan.
+
+3. Model terakhir adalah QDA dengan nilai akurasi yang cukup baik yaitu 0.75, namun masih lebih rendah dibandingkan dengan logisitic regression. Dari confussion matrix QDA, dapat dilihat bahwa prediksi spam sebagai non spam cukup tinggi yaitu 57% sehingga model ini kurang baik untuk digunakan.
+
+Kesimpulannya, jika dibandingkan dengan model lain, logistic regression memiliki nilai akurasi yang lebih baik dibandingkan model klasifikasi lainnya.
