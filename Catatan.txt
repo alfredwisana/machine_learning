@@ -18,12 +18,14 @@ kemudian kami melakukan korelasi matrix serta mendescribe dataset, lalu mengcopy
 
 Setelah copy data, kami melakukan Normalisasi (scaling) pada kolom 'crl.tot' dalam  df_copy menggunakan teknik Min-Max Normalization untuk mengubah nilai-nilai dalam kolom sehingga memiliki rentang yang sama dengan kolom yang lain.
 
-Kemudian data dibagi menjadi 3, yaitu training data untuk melatih model , lalu validatiob data untuk mengevaluasi apakah model mengalami overfitting, underfitting, atau berada pada tingkat yang baik,
+Kemudian data dibagi menjadi 3, yaitu training data untuk melatih model , lalu validation data untuk mengevaluasi apakah model mengalami overfitting, underfitting, atau berada pada tingkat yang baik,
 terakhir testing data untuk menguji kinerja model secara independen.
 
 
 
 3)
+H0: Variable tidak memiliki relasi yang signifikan terhadap response
+H1: Variable memiliki relasi yang signifikan terhadap response
 1. ada, karena p-value dari fitur-fitur ini nilainya kurang dari alpha yang bernilai 5% dan hanya ada satu fitur yang p-valuenya di atas 5% yaitu fitur bang, sehingga dapat disimpulkan bahwa ada hubungan antara response dan predictors setelah diuji menggunakan tes p-value.
 
 
